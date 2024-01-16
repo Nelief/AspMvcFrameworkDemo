@@ -1,0 +1,85 @@
+﻿@* Aggiungi il model del oggetto che il form andrà a creare *@
+@model WebAppMVCFramework.DTO.MovieFormDTO
+@using WebAppMVCFramework.Helpers
+
+@{
+    ViewBag.Title = "Movie Form";
+}
+
+<h2 class="text-center">Customer Form</h2>
+
+@* Inizio del form, è importante specificare il giusto model di riferimento *@
+@using (Html.BeginForm("Save", "Movie"))
+{
+    <div class="d-flex justify-content-center">
+        @Html.ValidationSummary(true, "Please Fix the errors before saving the new Movie")
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="d-flex flex-column gap-2 justify-content-center text-center">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Movie.Title, "Titolo")
+                @Html.TextBoxFor(x => x.Movie.Title, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Movie.Title)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Movie.GenreId, "Genere")
+                @Html.DropDownListFor(x => x.Movie.GenreId
+                 , new SelectList(Model.Genres, "Id", "Name")
+                 , "Genere"
+                 , new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Movie.GenreId)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Movie.ReleaseDate, "Data di Rilascio")
+                @Html.MyDate(x=>x.Movie.ReleaseDate) 
+
+                @*@Html.EditorFor(x => x.Movie.ReleaseDate, new
+                    {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           type = "date",
+                           value = formattedReleaseDate
+                       }
+                    })*@
+
+                @Html.ValidationMessageFor(x => x.Movie.ReleaseDate)
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Movie.DateAdded, "Aggiunto il")
+                @Html.MyDate(x=>x.Movie.DateAdded)
+
+                @*@Html.EditorFor(x => x.Movie.DateAdded, new
+                    {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           type = "date",
+                           value = formattedAddedDate
+                       }
+                    })*@
+                @Html.ValidationMessageFor(x => x.Movie.DateAdded)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Movie.Stock, "Stock")
+                @Html.TextBoxFor(x => x.Movie.Stock, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Movie.Stock)
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">
+                Save
+            </button>
+        </div>
+    </div>
+
+
+    @Html.HiddenFor(x => x.Movie.Id);
+    @Html.AntiForgeryToken();
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

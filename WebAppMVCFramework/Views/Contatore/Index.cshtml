@@ -1,0 +1,80 @@
+﻿@model WebAppMVCFramework.Models.Contatore
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<p>Model: @Model.Conteggio</p>
+
+@* NOTA: la get continua ad usare il model come riferimento, quindi usare l' incremento GET dopo quello AJAX ritorna all' ultimo incremento  eseguito *@
+@Html.ActionLink("ContaGET", "Increment", "Contatore", new { conteggio = Model.Conteggio }, new { @class = "btn btn-primary", id = "IncrementGet" })
+<h2 class="Conteggio" style="display:inline-block">@Model.Conteggio</h2>
+<br />
+<br />
+
+
+@using (Html.BeginForm("IncrementPost", "Contatore", FormMethod.Post))
+{
+    //Submit Classica
+    <button type="submit" id="incrementButton" class="btn btn-primary" style="display:inline-block">ContaPOST</button>
+
+    @Html.LabelFor(x => x.Conteggio, Model.Conteggio.ToString(), new { @class = "Conteggio" })
+    <input type="text" name="Conteggio" id="ConteggioPost" value="@Model.Conteggio" />
+}
+
+<br />
+@using (Html.BeginForm("IncrementPostAjax", "Contatore", FormMethod.Post, new { id = "incrementFormAjax" }))
+{
+
+    //Btn AJAX per incremento senza submit
+    <button type="button" id="incrementButtonAjax" class="btn btn-primary" style="display:inline-block">ContaPOSTAjax</button>
+
+    @Html.LabelFor(x => x.Conteggio, Model.Conteggio.ToString(), new { @class = "Conteggio" })
+    <input type="text" name="Conteggio" id="ConteggioAjax" value="@Model.Conteggio" />
+}
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#incrementButtonAjax").on("click", function () {
+
+                var formData = $("#incrementFormAjax").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Contatore/IncrementPostAjax",
+                    data: formData,
+                    success: function (result) {
+                        //codice JS necessario per aggiornare direttamente il valore di conteggio nell' ActionLink
+                        //questo è tradotto in un tag <a></a> lato client, quindi l' unico modo per cambiare dinamicamente il valore di riferimento
+                        //da Model.conteggio a result.conteggio è andare a modificare il valore nella Query HTTP GET
+                        $("#IncrementGet").attr("href", "/Contatore/Increment?conteggio=" + result.Conteggio);
+                        $('.Conteggio').text(result.Conteggio);
+                        $("#ConteggioPost").val(result.Conteggio);
+                        $("#ConteggioAjax").val(result.Conteggio);
+                    },
+                    error: function (error) {
+                        console.log(error);
+
+
+                    }
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $("p").on({
+                mouseenter: function () {
+                    $(this).css("background-color", "lightgrey");
+                    $(this).css("font-weight", "bold");
+                },
+                mouseleave: function () {
+                    $(this).css("background-color", "white");
+                    $(this).css("font-weight", "normal");
+                }
+            });
+        });
+    </script>
+}
+<br />
+<p>Test Jquery</p>

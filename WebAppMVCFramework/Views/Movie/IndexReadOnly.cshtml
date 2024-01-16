@@ -1,0 +1,24 @@
+﻿@model WebAppMVCFramework.DTO.MovieList
+@{
+    ViewBag.Title = "Movies";
+}
+
+<h2 class="text-center">Movies</h2>
+<br />
+<div class="justify-content-center">
+    <table id="movies" class="table table-hover ">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>Titolo</th>
+                <th>Genere</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+    {
+    <script src="~/Scripts/movies.datatable.readonly.js"></script>
+}

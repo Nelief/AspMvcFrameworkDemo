@@ -1,0 +1,24 @@
+﻿@model WebAppMVCFramework.Models.Customer
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="fw-bold">@Model.Name @Model.Cognome  </h2>
+@if (Model.Birthdate.HasValue)
+{
+    <h3>Data di nascità:  @Model.Birthdate.Value.ToShortDateString()</h3>
+
+}
+<hr />
+@if (Model.MembershipTypeId != 1)
+{
+    <h3 class="fw-bold">Dettagli Iscrizione </h3>
+    <h4>Fee: @Model.MembershipType.SignUpFee</h4>
+
+    <h4>Mesi: @Model.MembershipType.DurationInMonths</h4>
+    <h4>Sconto: @Model.MembershipType.DiscoutRate %</h4>
+}
+else
+{
+    <h3 class="fw-bold">Non iscritto</h3>
+}

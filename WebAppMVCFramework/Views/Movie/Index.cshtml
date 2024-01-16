@@ -1,0 +1,28 @@
+﻿@model WebAppMVCFramework.DTO.MovieList
+@{
+    ViewBag.Title = "Movies";
+}
+
+<h2 class="text-center">Movies</h2>
+<div class="d-flex flex-row justify-content-start">
+    @Html.ActionLink("New", "New", "Movie", new { @class = "btn btn-secondary" })
+</div>
+<br />
+<div class="justify-content-center">
+    <table id="movies" class="table table-hover ">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>Titolo</th>
+                <th>Genere</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+    {
+    <script src="~/Scripts/movies.datatable.js"></script>
+}

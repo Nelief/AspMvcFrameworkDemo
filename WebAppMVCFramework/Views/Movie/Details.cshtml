@@ -1,0 +1,13 @@
+﻿@model WebAppMVCFramework.Models.Movie
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2 class="fw-bold">@Model.Title  </h2>
+<hr />
+<ul>
+    <li>Genre: @Model.Genre.Name</li>
+    <li>Release Date: @Model.ReleaseDate.Value.ToString("yyyy/MM/dd")</li>
+    <li>Date Added: @Model.DateAdded.Value.ToString("yyyy/MM/dd")</li>
+    <li>In Stock: @Model.Stock</li>
+</ul>

@@ -1,0 +1,59 @@
+﻿@model WebAppMVCFramework.DTO.CustomerList
+
+@{
+    ViewBag.Title = "Customers";
+}
+    
+<h2 class="text-center">Customers</h2>
+<div class="d-flex flex-row justify-content-start">
+    @Html.ActionLink("New", "New", "Customer", new { @class = "btn btn-secondary" })
+</div>
+<br />
+<div class="justify-content-center">
+    <table id="customers" class="table table-hover">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>Customers</th>
+                <th>Membership Type</th>
+                <th>Discount Rate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @* MVC TABLE *@
+            @*@foreach (var customer in Model.customers)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                @Html.ActionLink(customer.Name + " " + customer.Cognome, "Details", "Customer", new { id = customer.Id }, new { @class = "text-dark text-decoration-none" })
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                @customer.MembershipType.Name
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center">
+                                @customer.MembershipType.DiscoutRate %
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex justify-content-center gap-1">
+                                @Html.ActionLink("EDIT", "Edit", "Customer", new { id = customer.Id }, new { @class = "btn btn-secondary" })
+                                <button data-customer-id="@customer.Id" class="btn btn-danger js-delete">DELETE</button>
+                            </div>
+                        </td>
+                    </tr>
+                }*@
+
+        </tbody>
+    </table>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/customers.datatable.js"></script>
+}
